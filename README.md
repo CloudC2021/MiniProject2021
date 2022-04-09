@@ -81,3 +81,21 @@ If we want to kill our operation, we first must find its id.
   
 	sudo netstat -lntp | grep 3002
 	kill -9 <id>
+**Steps to Setup SSL on Google Cloud Platform load balancer**
+ 
+Create a website: www.c1.ccweb.uk using GCP by creating an instance in VM engine.
+Create an instance in server software ubuntu, in the us-west-4a region with the auto generated external IP we can interact with our chatbot 34.125.212.179
+Create an unmanaged instance group named bot-instance group link the created website to it.
+Set up the HTTPS load balancer named ssl-bot-backend, ssl-bot-frontend, ssl-bot-service.
+Ssl-bot-backend-services point it to the VM engine, create a backend service http: 80 port, Instance Group: ssl-bot-instance group, 
+ 
+Set up a health-criteria: Check interval: 10, Timeout: 5,Healthy threshold: 2, Unhealthy threshold: 3The health check makes a curl request every 5 to 8 seconds to the external IP. If the curl runs into a 404, then the load balancer will flag it as unhealthy.
+Host Rules and Path: Create ssl frontend configuration using Https Protocol, IP Address, IP Port
+ 
+Create an SSL- Certificate as google managed, with the domain name: www.c1.ccweb.uk
+
+ 
+The public request is set up for HTTPS: port 443 in the load balancer.
+Cloud DNS create a zone, proxy the request to our load balancer using the public IP address, create an A record as an alias name TTL,TTL limit which is in turn sent to the VM.
+Run $dig <website ID>Update the DNS> IP Port will be activated
+Check if the website has a lock icon on the URL which indicates a successful SSL set-up.
