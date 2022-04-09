@@ -88,7 +88,11 @@ Create an instance in server software ubuntu, in the us-west-4a region with the 
 Create an unmanaged instance group named bot-instance group link the created website to it.
 Set up the HTTPS load balancer named ssl-bot-backend, ssl-bot-frontend, ssl-bot-service.
 Ssl-bot-backend-services point it to the VM engine, create a backend service http: 80 port, Instance Group: ssl-bot-instance group, 
- 
+![WhatsApp Image 2022-04-09 at 4 05 54 PM](https://user-images.githubusercontent.com/103321549/162586447-b0fdfe96-7481-4d0b-b72e-f9b9afbb8b9f.jpeg)
+![WhatsApp Image 2022-04-09 at 4 05 55 PM](https://user-images.githubusercontent.com/103321549/162586452-524372b3-6008-4f5e-b5b5-0b6d166bd48f.jpeg)
+![WhatsApp Image 2022-04-09 at 4 06 04 PM](https://user-images.githubusercontent.com/103321549/162586457-7f5008a3-4e53-457b-88db-8ac0fb43163c.jpeg)
+![WhatsApp Image 2022-04-09 at 4 06 01 PM](https://user-images.githubusercontent.com/103321549/162586468-4128df83-80fb-40ed-96b2-0fa67d31ac07.jpeg)
+
 Set up a health-criteria: Check interval: 10, Timeout: 5,Healthy threshold: 2, Unhealthy threshold: 3The health check makes a curl request every 5 to 8 seconds to the external IP. If the curl runs into a 404, then the load balancer will flag it as unhealthy.
 Host Rules and Path: Create ssl frontend configuration using Https Protocol, IP Address, IP Port
  
