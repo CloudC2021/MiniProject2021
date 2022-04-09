@@ -101,5 +101,7 @@ Create an SSL- Certificate as google managed, with the domain name: www.c1.ccweb
  
 The public request is set up for HTTPS: port 443 in the load balancer.
 Cloud DNS create a zone, proxy the request to our load balancer using the public IP address, create an A record as an alias name TTL,TTL limit which is in turn sent to the VM.
-Run $dig <website ID>Update the DNS> IP Port will be activated
+Run $dig website url
+Update the DNS
+Check IP for activation status
 Check if the website has a lock icon on the URL which indicates a successful SSL set-up.
