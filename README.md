@@ -81,7 +81,7 @@ If we want to kill our operation, we first must find its id.
   
 	sudo netstat -lntp | grep 3002
 	kill -9 <id>
-**Steps to Setup SSL on Google Cloud Platform load balancer**
+#Steps to Setup SSL on Google Cloud Platform load balancer
  
 Create a website: www.c1.ccweb.uk using GCP by creating an instance in VM engine.
 Create an instance in server software ubuntu, in the us-west-4a region with the auto generated external IP we can interact with our chatbot 34.125.212.179
