@@ -10,6 +10,8 @@ Most university website are complicated and that make it difficult to navigated 
 This is a chat bot that can be used from any University in their main website to guide visitors. It can be used to answer questions, guide them to available programs and show the entry requirements. All of that in the form of a friendly conversation. It will not replace websites, but it will be use along side of them to offer more user-friendly option. 
 
 <h2>System Architect</h2>
+
+
 ![flow_2 drawio](https://user-images.githubusercontent.com/48182913/162636159-72f56775-d843-4fc8-9b12-1a66210026d6.jpg)
 
 
