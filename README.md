@@ -23,7 +23,7 @@ The backend is a REST-based service interface for CRUD operations. Those operati
 
 <h2>How the code works (Flask Data management App - Sign Up, Login & Update User Queries)</h2>
 
-The app is split to the user Sing Up & Log in and the data emthods such as store, update and delete user queries for a particular user account. First, in the usermethods.py & datamethods.py we connect with MongoDB to store and retreive our user information as well as the enquiry data.
+The app is split to the user Sing Up & Log in and the data methods such as store, update and delete user queries for a particular user account. First, in the usermethods.py & datamethods.py we connect with MongoDB to store and retreive our user information as well as the enquiry data.
 
 <h3>Usermethods.py</h3>
 We are using a sing up function to let new users’ login in our site. Inside the sing up function we request email and password from the user, we encrypted the password using pbkdf2_sha256 hashing algorithm and we save those values in our database. In the case that the email that the user gave already exist we return the 400 code and print error "Email address already in use". 
