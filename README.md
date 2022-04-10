@@ -49,6 +49,17 @@ After passing all relevant libraries we use routing to set how the application r
 Then, once session is initiated a connection is established with the Google DialogFlow engine authenticating the credentials of the token we have obatained to connect with our trained chatbot in DialogFlow. Nex, once the conversation is started, if the input is in voice, it will be translated to text using google Speech To Text(STT) apis and using talkToBotText method we send the input text to our DialogFlow chat bot and once the output is received and if the voice is enables the text output will be again translated to voice using google Text To Speech(TTS) apis before giving the output to the user.
 
 <h2>Google Dialog Flow</h2>
+
+<h3>Training the Chat Bot</h3>
+
+In Google DialogFlow, we create intents to recognize the user's intention while interacting with the bot and to do so we use example training data to train the machine learning algorithm which the DialogFlow incorporates in it's intent detection. Here we creates main intents to find if the user is an existing user or a new one and then sign the person up or make the person login to the system to obtain the authorization token and then create a new enquiry or else to update or delete existing enquiries related to the user's account authenticating the user with the recieved auth token.
+
+<h3>Sending and receiving the user and enquiry data with the flask data management app from DialogFlow</h3>
+
+For this purpose we make use of the webhook fulfillment functionality of the Google DialogFlow where we can write a javascript backend code to send and receive data using REST API. Here we have written javascript axios library methods to send and receive data from our flask data management app to signup user, login to get the auth token and do modifications with the user query storage.
+
+<h2>Deployment of the chatbot back end node app</h2>
+
 First, we login to our GCP account. 
 
 From Computer Engine->VM Instances we create a virtual machine instance. 
@@ -74,19 +85,38 @@ To run then app on the GCP we zip and upload all the files on our vm instance. T
 	sudo apt install unzip
   	unzip <name>.zip
   
-Before we run the code we first have to install all the dependencies. For that we run npm.
+Before we run the code we first have to install all the dependencies. For that we navigate to the folder where app.js is and then we run npm.
 
 	npm install
 	
-We navigate to the folder where app.js is and we run the app. We are using nohub to run the app to run on background even if we close our terminal. 
+Afterwards, we navigate to the folder where app.js is and we run the app. We are using nohup to run the app to run on background in the port 3002 even if we close our terminal. 
   
-	nohub node app.js >/dev/null 2>&1 &
+	nohup node app.js >/dev/null 2>&1 &
   
 Our app is now running. We can see it using the external IP and the port we gave to it (in our case is port 3002).
 If we want to kill our operation, we first must find its id.
   
 	sudo netstat -lntp | grep 3002
 	kill -9 <id>
+	
+<h2>Deployment of the Flask Data management app</h2>
+
+First, we login to our GCP account. 
+
+From Computer Engine->VM Instances we create a virtual machine instance. 
+
+We use SSH to connect to our instance using our terminal. 
+
+Then we install anaconda python to have the python base.
+  
+Then we restart the terminal and change into the flask datamanagement app folder and install the requred python libraries from the requirements.txt file.
+
+	pip install -r ./requirements.txt
+  
+Then we will run our app.py in the background to launch the app in the port 5001.
+
+	nohup python app.py >/dev/null 2>&1 &
+	
 #Steps to Setup SSL on Google Cloud Platform load balancer
  
 Create a website: www.c1.ccweb.uk using GCP by creating an instance in VM engine.
@@ -97,10 +127,19 @@ Create an unmanaged instance group named bot-instance group link the created web
 Set up the HTTPS load balancer named ssl-bot-backend, ssl-bot-frontend, ssl-bot-service.
 	
 Ssl-bot-backend-services point it to the VM engine, create a backend service http: 80 port, Instance Group: ssl-bot-instance group, 
-![WhatsApp Image 2022-04-09 at 4 05 54 PM](https://user-images.githubusercontent.com/103321549/162586447-b0fdfe96-7481-4d0b-b72e-f9b9afbb8b9f.jpeg)
-![WhatsApp Image 2022-04-09 at 4 05 55 PM](https://user-images.githubusercontent.com/103321549/162586452-524372b3-6008-4f5e-b5b5-0b6d166bd48f.jpeg)
-![WhatsApp Image 2022-04-09 at 4 06 04 PM](https://user-images.githubusercontent.com/103321549/162586457-7f5008a3-4e53-457b-88db-8ac0fb43163c.jpeg)
-![WhatsApp Image 2022-04-09 at 4 06 01 PM](https://user-images.githubusercontent.com/103321549/162586468-4128df83-80fb-40ed-96b2-0fa67d31ac07.jpeg)
+<p>&nbsp;</p>
+<kbd>
+<img src="https://user-images.githubusercontent.com/103321549/162586447-b0fdfe96-7481-4d0b-b72e-f9b9afbb8b9f.jpeg"  width="800" ></kbd>
+<p>&nbsp;</p>
+<kbd>
+<img src="https://user-images.githubusercontent.com/103321549/162586452-524372b3-6008-4f5e-b5b5-0b6d166bd48f.jpeg" width="400" ></kbd>
+<p>&nbsp;</p>
+<kbd>
+<img src="https://user-images.githubusercontent.com/103321549/162586457-7f5008a3-4e53-457b-88db-8ac0fb43163c.jpeg" width="1000"></kbd>
+<p>&nbsp;</p>
+<kbd>
+<img src="https://user-images.githubusercontent.com/103321549/162586468-4128df83-80fb-40ed-96b2-0fa67d31ac07.jpeg" width="400"></kbd>
+<p>&nbsp;</p>
 
 Set up a health-criteria: Check interval: 10, Timeout: 5,Healthy threshold: 2, Unhealthy threshold: 3The health check makes a curl request every 5 to 8 seconds to the external IP. If the curl runs into a 404, then the load balancer will flag it as unhealthy.
 	
