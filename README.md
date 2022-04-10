@@ -17,7 +17,7 @@ The front-end is consist of the main website (in our example is empty but that i
 The backend is a REST-based service interface for CRUD operations. Those operations are consisting of user sing up and log in and data query of university information’s and is also using Google Dialog Flow, Google STT and Google TTS external APIs for voice speech and voice recognition. The Chat-bot is deployed though Google Cloud PLatform and user's sensitive information (here we only colelct the password) is hashed and then stored in cloud MongoDB, a NoSQL cloud persistent database. 
 
 
-<h2>How the code works (Flask Data management App - Sing Up Login & Update User Queries)</h2>
+<h2>How the code works (Flask Data management App - Sign Up, Login & Update User Queries)</h2>
 
 The app is split to the user Sing Up & Log in and the data emthods such as store, update and delete user queries for a particular user account. First, in the usermethods.py & datamethods.py we connect with MongoDB to store and retreive our user information as well as the enquiry data.
 
@@ -31,7 +31,7 @@ Inside data methods we give the option to the user to add an enquire (in case th
 <h3>App.py</h3>
 The app.py is using RESTful methodology to Post, Put, Get and Delete the enquiries of the user. The app.py is calling the functions from the previous two files and routes the data in the appropriate destination.  
 
-<h2>How the code works (Nature Voice Chat-Bot)</h2>
+<h2>How the code works (Natural Voice Chat-Bot)</h2>
 
 <h3>APIs</h3>
 
@@ -117,14 +117,15 @@ Then we will run our app.py in the background to launch the app in the port 5001
 
 	nohup python app.py >/dev/null 2>&1 &
 	
-#Steps to Setup SSL on Google Cloud Platform load balancer
- 
-Create a website: www.c1.ccweb.uk using GCP by creating an instance in VM engine.
+<h2>Steps to setup SSL on Google Cloud Platform load balancer</h2>
+
+First we have to obtain a domain from a domain name registrar.
+
+Then we have to create two unmanaged instance groups for the 2 instances on GCP running the chatbot backend node app and the flask datamanagement app to map them to static urls with respective ports of 3002 and 5001.
 	
-Create an instance in server software ubuntu, in the us-west-4a region with the auto generated external IP we can interact with our chatbot 34.125.212.179
-Create an unmanaged instance group named bot-instance group link the created website to it.
-	
-Set up the HTTPS load balancer named ssl-bot-backend, ssl-bot-frontend, ssl-bot-service.
+Next we have to set up 2 HTTPS load balancers installing 2 different SSL certificates with dedicated static public ips(mapped to domain urls) pointing to the 2 managed instance groups.
+
+Finally we have to update the DNS settings of our domain to map the 2 static public https ips to the mapped urls.  .
 	
 Ssl-bot-backend-services point it to the VM engine, create a backend service http: 80 port, Instance Group: ssl-bot-instance group, 
 <p>&nbsp;</p>
