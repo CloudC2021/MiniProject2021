@@ -121,6 +121,12 @@ Then we will run our app.py in the background to launch the app in the port 5001
 
 	nohup python app.py >/dev/null 2>&1 &
 	
+Our app is now running. We can see it using the external IP and the port we gave to it (in our case is port 5001).
+If we want to kill our operation, we first must find its id.
+  
+	ps -ef | grep python
+	kill -9 <id>
+	
 <h2>Steps to setup SSL on Google Cloud Platform load balancer</h2>
 
 First we have to obtain a domain from a domain name registrar.
@@ -130,37 +136,16 @@ Then we have to create two unmanaged instance groups for the 2 instances on GCP 
 Next we have to set up 2 HTTPS load balancers installing 2 different SSL certificates with dedicated static public ips(mapped to domain urls) pointing to the 2 managed instance groups.
 
 Finally we have to update the DNS settings of our domain to map the 2 static public https ips to the mapped urls.  .
-	
-Ssl-bot-backend-services point it to the VM engine, create a backend service http: 80 port, Instance Group: ssl-bot-instance group, 
+
+<h2>Our Example Deployment</h2>
+
+First we obtained a domain called ccweb.uk for our deployment.
+
+Then to showcase HTTPS as an example, we obtained a SSL Certificate from Google managed SSL Certs
+
 <p>&nbsp;</p>
 <kbd>
-<img src="https://user-images.githubusercontent.com/103321549/162586447-b0fdfe96-7481-4d0b-b72e-f9b9afbb8b9f.jpeg"  width="800" ></kbd>
-<p>&nbsp;</p>
-<kbd>
-<img src="https://user-images.githubusercontent.com/103321549/162586452-524372b3-6008-4f5e-b5b5-0b6d166bd48f.jpeg" width="400" ></kbd>
-<p>&nbsp;</p>
-<kbd>
-<img src="https://user-images.githubusercontent.com/103321549/162586457-7f5008a3-4e53-457b-88db-8ac0fb43163c.jpeg" width="1000"></kbd>
-<p>&nbsp;</p>
-<kbd>
-<img src="https://user-images.githubusercontent.com/103321549/162586468-4128df83-80fb-40ed-96b2-0fa67d31ac07.jpeg" width="400"></kbd>
+<img src="https://user-images.githubusercontent.com/14356479/162636365-059c73ac-586a-4d11-a966-9151d91fd153.jpg"  width="380" ></kbd>
 <p>&nbsp;</p>
 
-Set up a health-criteria: Check interval: 10, Timeout: 5,Healthy threshold: 2, Unhealthy threshold: 3The health check makes a curl request every 5 to 8 seconds to the external IP. If the curl runs into a 404, then the load balancer will flag it as unhealthy.
-	
-Host Rules and Path: Create ssl frontend configuration using Https Protocol, IP Address, IP Port
- 
-Create an SSL- Certificate as google managed, with the domain name: www.c1.ccweb.uk
-
- 
-The public request is set up for HTTPS: port 443 in the load balancer.
-	
-Cloud DNS create a zone, proxy the request to our load balancer using the public IP address, create an A record as an alias name TTL,TTL limit which is in turn sent to the VM.
-	
-Run $dig website url
-	
-Update the DNS
-	
-Check IP for activation status
-	
-Check if the website has a lock icon on the URL which indicates a successful SSL set-up.
+Then we mapped that SSL certificate to deploy our application in a public https url https://chat1.ccweb.uk/ .
