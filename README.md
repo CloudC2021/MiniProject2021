@@ -14,7 +14,7 @@ This is a chat bot that can be used from any University in their main website to
 ![image](https://user-images.githubusercontent.com/103259172/162576570-cd8caca9-ad97-4ad7-bdb4-4128d174f1e5.png)
 
 The front-end is consist of the main website (in our example is empty but that is where the university website is supposed to be) and the chat bot in the bottom right of the side. The user can interact with the chat bot ether by writing questions in the chat or by vocally asking. The chat bot both displayed the answers in the place of the chat and by voice. 
-The backend is a REST-based service interface for CRUD operations. Those operations are consisting of user sing up and log in and data query of university information’s and is also using Google Dialog Flow, Google STT and Google TTS external APIs for voice speech and voice recognition. The Chat-bot is deployed though Google Cloud and user information’s as username and password are first hashed and then store in MongoDB, a NoSQL database. 
+The backend is a REST-based service interface for CRUD operations. Those operations are consisting of user sing up and log in and data query of university information’s and is also using Google Dialog Flow, Google STT and Google TTS external APIs for voice speech and voice recognition. The Chat-bot is deployed though Google Cloud PLatform and user's sensitive information (here we only colelct the password) is hashed and then stored in cloud MongoDB, a NoSQL cloud persistent database. 
 
 
 <h2>How the code works (Sing Up & Login)</h2>
