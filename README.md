@@ -69,9 +69,13 @@ Then we use nvm to install node.js.
 By indicating 12.18.3 it will install 12.18.3 version of node.js. Any version over 10.00.0 could work, anything below that could not work with Google’s APIs. 
 To run then app on the GCP we zip and upload all the files on our vm instance. Then we must unzip them.
 
-  sudo apt install unzip
-  unzip <name>.zip
+	sudo apt install unzip
+  	unzip <name>.zip
   
+Before we run the code we first have to install all the dependencies. For that we run npm.
+
+	npm install
+	
 We navigate to the folder where app.js is and we run the app. We are using nohub to run the app to run on background even if we close our terminal. 
   
 	nohub node app.js >/dev/null 2>&1 &
