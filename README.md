@@ -17,19 +17,19 @@ The front-end is consist of the main website (in our example is empty but that i
 The backend is a REST-based service interface for CRUD operations. Those operations are consisting of user sing up and log in and data query of university information’s and is also using Google Dialog Flow, Google STT and Google TTS external APIs for voice speech and voice recognition. The Chat-bot is deployed though Google Cloud PLatform and user's sensitive information (here we only colelct the password) is hashed and then stored in cloud MongoDB, a NoSQL cloud persistent database. 
 
 
-<h2>How the code works (Sing Up & Login)</h2>
+<h2>How the code works (Flask Data management App - Sing Up Login & Update User Queries)</h2>
 
-The app is split to the user Sing Up & Log in code and to the Chat-Bot code.  First, in the datamethods.py we connected with MongoDB.
+The app is split to the user Sing Up & Log in and the data emthods such as store, update and delete user queries for a particular user account. First, in the usermethods.py & datamethods.py we connect with MongoDB to store and retreive our user information as well as the enquiry data.
 
 <h3>Usermethods.py</h3>
 We are using a sing up function to let new users’ login in our site. Inside the sing up function we request email and password from the user, we encrypted the password using pbkdf2_sha256 hashing algorithm and we save those values in our database. In the case that the email that the user gave already exist we return the 400 code and print error "Email address already in use". 
-Going now in the login function we are searching though the database using the email that the user gave us. If the email exist in our database and the hashed value of the password matches the value, we have in our database we create an authorized token and allow access to the user, else we return 201 and print “Invalid login credentials”. 
+Going now onwards in the login function we are searching though the database using the email that the user gave us. If the email exist in our database and the hashed value of the password matches the value we have in our database we create an authorized token and allow access to the user, else we return 201 and print “Invalid login credentials”. 
 
 <h3>Datamethonds.py</h3>
-Inside data methods we give the option to the user to add an enquire (in case the chat bot does not have the answer for someone to answer it physically). We created four functions for that purpose, add, get, update, delete). In every function we first check if the user is login to the system by using the authorization token that we already created in the usermethods.py file. Then is the add_enquire function we get the enquire from the user, we check the user have ask again the same enquire, if not the enquire store in the mongoDB database for review, and we also create an enquire id. The get_enquiry function is used in case a user want to see an enquire that he already submitted. We ask the enquire id from the user and by using the id and the email of the user (that we took from the authentication token) and if the enquire exist in our database we print it for the user to see. After that we ask the user if he want to update or delete his enquiry. If he wants to update his enquire we ask for the new enquiry and update it in our database under the same id, else we delete the enquiry from our database. 
+Inside data methods we give the option to the user to add an enquire (in case the chat bot does not have the answer for someone to answer it physically). We created four functions for that purpose- add, get, update, delete). In every function we first check if the user is logged in to the system by using the authorization token that we already created and received back in the usermethods.py file during log in. Then is the add_enquire function we get the enquire from the user, we check the user have ask again the same enquire, if not the enquire store in the mongoDB database for review, and we also create an enquire id. The get_enquiry function is used in case a user want to see an enquiry that he already submitted. We ask the enquire id from the user and by using the id and the email of the user (that we took from the authentication token) check in the enquiries collection of our database and if the enquiry exist in our database we print it for the user to see. After that we ask the user if he want to update or delete his enquiry. If he wants to update his enquire we ask for the new enquiry and update it in our database under the same id, else we delete the enquiry from our database. 
 
 <h3>App.py</h3>
-The app.py is using RESTful methodology to Post, Put, Get and Delete the enquiries of the user. The app.py is calling the functions from the previous two files and routes the data in the appropriate destination  
+The app.py is using RESTful methodology to Post, Put, Get and Delete the enquiries of the user. The app.py is calling the functions from the previous two files and routes the data in the appropriate destination.  
 
 <h2>How the code works (Nature Voice Chat-Bot)</h2>
 
@@ -45,6 +45,8 @@ Google STT is a Text-to-Speech API design to convert text into natural-sounding 
 <h3>Main App (app.js)</h3>
 In the main app we first pass all the public libraries and Google’s APIs. In the public libraries we have used a front-end template for our UI, sounds, a css template to align our feature properly socket.IO library. Socket.Io is a library that enables real-time, bidirectional, and event-based communication between the browser and the server. It consists of a Node. js server: Source | API.
 After passing all relevant libraries we use routing to set how the application responds to a client request, we use res.render(‘index) to send the rendered view to the client. Finally, we use socket.io to connect server with client and initiate our chat-bot. Then we created 4 functions based on 4 different scenarios, if that’s the first time the user interacts with the bot, one to start recognition stream, one to stop recognition stream and a final for generating voice. 
+
+Then, once session is initiated a connection is established with the Google DialogFlow engine authenticating the credentials of the token we have obatained to connect with our trained chatbot in DialogFlow. Nex, once the conversation is started, if the input is in voice, it will be translated to text using google Speech To Text(STT) apis and using talkToBotText method we send the input text to our DialogFlow chat bot and once the output is received and if the voice is enables the text output will be again translated to voice using google Text To Speech(TTS) apis before giving the output to the user.
 
 <h2>Google Dialog Flow</h2>
 First, we login to our GCP account. 
