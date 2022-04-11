@@ -1,0 +1,32 @@
+{
+  "voice": {
+    "engine": "GOOGLE",
+    "language": "en-US",
+    "options": {
+      "voiceType": "en-US-Wavenet-F",
+      "contexts": ["admissions", "school", "enquiry", "inquiry", "existing", "login", "signup", "delete", "update"
+	  ]
+    }
+  },
+
+  "ai": {
+    "engine": "GOOGLE",
+    "language": "en-US",
+    "options": {
+      "projectId": "test1-hwwt"
+    }
+  },
+
+  "general": {
+    "greeting": [
+      "Hi, I am Digital Assistant.",
+      "I will be able to assist you with your queries."
+    ],
+    "inputTextOnlyGuidance": [
+      "Since there can be spelling mistakes introduced through voice, please provide your answer as text.",
+      "To get the information really right for me, please provide your answers as text.",
+      "Well, this time, I expect your answers to be in text to be more accurate."
+    ]
+  }
+
+}
