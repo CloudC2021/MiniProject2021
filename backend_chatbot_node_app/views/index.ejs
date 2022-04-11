@@ -1,0 +1,43 @@
+<!-- Copyright 1998-2019 Epic Games, Inc. All Rights Reserved. -->
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=false"/>
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,"> -->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div style="height: 100vh;width: 100vw">
+        <img id="dummy-banner" src="assets/images/banner.jpeg" />
+    </div>
+
+
+</body>
+<script type="text/javascript">
+    var cogniusConfig={
+
+        sessionId: Math.ceil(100000*Math.random())+""+Date.now(),
+        graphicApi:"ws://"+window.location.hostname+":19000",
+        aiApi: location.protocol+"//"+window.location.hostname+(window.location.port === "" ? "" : ":"+window.location.port),
+        brandImageFront: location.protocol+"//"+window.location.hostname+(window.location.port === "" ? "" : ":"+window.location.port)+'/assets/images/chat_face.jpg',
+        brandImage: location.protocol+"//"+window.location.hostname+(window.location.port === "" ? "" : ":"+window.location.port)+'/assets/images/chat_face.jpg',
+        micOnStart:true,
+        chatOpenOnStart:true,
+        text: true,
+        audio: true,
+        avatar: false,
+        preConfigText:{
+            overlayUpperHeader: 'Your Digital Assistant',
+            overlayHeader: 'Hi, Digital Assistant Here !',
+            overlayDescription: 'I can help you with queries.',
+        }
+    }
+</script>
+<script type="text/javascript" src="assets/app.js"></script>
+<style type="text/css">
+    #dummy-banner{
+        height: 100vh;padding: auto;position: absolute;top: 0;left: 0;right: 0;bottom: 0;margin: auto;
+    }
+</style>
+</html>
